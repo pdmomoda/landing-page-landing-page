@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>The Ultimate IDE for Prompt Engineers & Vibe Coding | VibeCode</title>
+    <meta name="description" content="Stop context switching. Manage prompts, compare models, and generate code effortlessly with the only tool built specifically for Vibe Coders. Start for free.">
+    <meta name="keywords" content="vibe coding tool, prompt engineering IDE, LLM workflow manager, AI coding assistant, prompt version control, context window management">
+    <meta name="author" content="VibeCode">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vibecode.dev/">
+    <meta property="og:title" content="The Ultimate IDE for Prompt Engineers & Vibe Coding">
+    <meta property="og:description" content="Stop Wrestling With Context Windows and Start Shipping Your Best Ideas. The ultimate workflow engine for prompt engineers and vibe coders.">
+    <meta property="og:image" content="/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vibecode.dev/">
+    <meta property="twitter:title" content="The Ultimate IDE for Prompt Engineers & Vibe Coding">
+    <meta property="twitter:description" content="Stop Wrestling With Context Windows and Start Shipping Your Best Ideas.">
+    <meta property="twitter:image" content="/og-image.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1', // Indigo
+                        secondary: '#a855f7', // Purple
+                        accent: '#10b981', // Emerald
+                        dark: {
+                            900: '#0A0A0F',
+                            800: '#12121A',
+                            700: '#1C1C26',
+                        },
+                        text: {
+                            main: '#FFFFFF',
+                            muted: '#A0A0B0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-glow': 'radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, rgba(10, 10, 15, 0) 70%)',
+                        'card-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "VibeCode",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web, Mac, Windows",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "The ultimate workflow engine for prompt engineers and vibe coders.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "2000"
+      }
+    }
+    </script>
+
+    <style>
+        body {
+            background-color: #0A0A0F;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1C1C26;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-primary {
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glow effects */
+        .glow-hover:hover {
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+<style>
+/* VibeCode Pager - Theme: Linear Dark */
+:root {
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #12121A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0B0;
+  --accent: #5E6AD2;
+  --accent-hover: #7C85E0;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.section-padding {
+  padding: 5rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 6rem 2rem;
+  }
+}
+
+/* Waitlist form styling */
+#waitlist-form input[type="email"] {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--text-secondary);
+  color: var(--text-primary);
+}
+
+#waitlist-form input[type="email"]:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(94, 106, 210, 0.2);
+}
+
+/* VibeCode Pager badge */
+.vibecode-badge {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  z-index: 50;
+}
+
+.vibecode-badge:hover {
+  opacity: 1;
+}
+</style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-white/5 bg-dark-900/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
+            <a href="#" class="flex items-center gap-2 rtl:space-x-reverse">
+                <div class="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                    <i class="fa-solid fa-bolt text-white text-sm"></i>
+                </div>
+                <span class="self-center text-xl font-bold whitespace-nowrap text-white tracking-tight">VibeCode</span>
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <a href="#cta" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all shadow-lg shadow-indigo-500/20">
+                    Get Started
+                </a>
+                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-white/5 focus:outline-none" aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-white/10 rounded-lg bg-dark-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
+                    <li>
+                        <a href="#features" class="block py-2 px-3 text-gray-400 rounded hover:text-white md:p-0 transition-colors">Features</a>
+                    </li>
+                    <li>
+                        <a href="#use-cases" class="block py-2 px-3 text-gray-400 rounded hover:text-white md:p-0 transition-colors">Use Cases</a>
+                    </li>
+                    <li>
+                        <a href="#how-it-works" class="block py-2 px-3 text-gray-400 rounded hover:text-white md:p-0 transition-colors">How it Works</a>
+                    </li>
+                    <li>
+                        <a href="#pricing" class="block py-2 px-3 text-gray-400 rounded hover:text-white md:p-0 transition-colors">Pricing</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <!-- Background Gradient -->
+        <div class="absolute top-0 left-0 right-0 h-full bg-hero-glow pointer-events-none -z-10"></div>
+        <div class="absolute top-20 right-0 w-96 h-96 bg-purple-900/20 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-900/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="text-left">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-medium mb-6">
+                        <span class="flex w-2 h-2 bg-indigo-400 rounded-full mr-2 animate-pulse"></span>
+                        v2.0 Now Available with Multi-Model Support
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                        Stop Wrestling With <span class="text-gradient-primary">Context Windows</span> and Start Shipping.
+                    </h1>
+                    <p class="text-xl text-text-muted mb-4 font-light">
+                        The ultimate workflow engine for prompt engineers and vibe coders who are tired of copy-pasting between VS Code and ChatGPT.
+                    </p>
+                    <p class="text-base text-gray-400 mb-8 max-w-lg">
+                        You know exactly what you want to build, but the friction of managing API keys, versioning prompts, and juggling context is killing your flow. We built the unified interface that lets you turn your raw 'vibes' into production-ready code without the headache.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                        <a href="#cta" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg px-8 py-4 text-center transition-all shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2">
+                            Start Building for Free <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#demo" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium rounded-lg px-8 py-4 text-center transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-play"></i> View the Demo
+                        </a>
+                    </div>
+
+                    <!-- Trust / Stats -->
+                    <div class="border-t border-white/10 pt-8 flex gap-8 items-center text-sm text-gray-400">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-accent"></i>
+                            <span>SOC2 Compliant</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-accent"></i>
+                            <span>Local-First Data</span>
+                        </div>
+                        <div class="flex -space-x-3 rtl:space-x-reverse">
+                            <div class="w-8 h-8 rounded-full border-2 border-dark-900 bg-gray-700 flex items-center justify-center text-xs">SJ</div>
+                            <div class="w-8 h-8 rounded-full border-2 border-dark-900 bg-gray-600 flex items-center justify-center text-xs">MT</div>
+                            <div class="w-8 h-8 rounded-full border-2 border-dark-900 bg-gray-500 flex items-center justify-center text-xs">+2k</div>
+                        </div>
+                        <span>Loved by 2M+ devs</span>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="relative lg:h-auto animate-float">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-2xl blur-2xl transform rotate-3 scale-95 opacity-50"></div>
+                    <img src="/images/hero_0.png" alt="VibeCode Interface Dashboard" class="relative rounded-xl border border-white/10 shadow-2xl bg-dark-800 w-full h-auto object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="py-24 bg-dark-800 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">The "Copy-Paste" Loop of Death is <span class="text-red-400">Ruining Your Flow</span></h2>
+                <p class="text-gray-400 text-lg">You aren't struggling with the code; you're struggling with the chaotic tooling required to generate it.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pain Point 1 -->
+                <div class="bg-dark-900 border border-white/5 p-8 rounded-xl hover:border-red-500/30 transition-colors">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-brain text-red-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Context Amnesia</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        There is nothing worse than an LLM forgetting your file structure halfway through a session. You waste countless hours re-explaining your architecture instead of actually building.
+                    </p>
+                </div>
+
+                <!-- Pain Point 2 -->
+                <div class="bg-dark-900 border border-white/5 p-8 rounded-xl hover:border-red-500/30 transition-colors">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-clock-rotate-left text-red-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Prompt Version Chaos</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        That system prompt worked perfectly yesterday, but you tweaked one word and now it's broken. Without version control for your prompts, you're just guessing what changed.
+                    </p>
+                </div>
+
+                <!-- Pain Point 3 -->
+                <div class="bg-dark-900 border border-white/5 p-8 rounded-xl hover:border-red-500/30 transition-colors">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-layer-group text-red-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">The Model Roulette</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Testing if Claude 3.5, GPT-4o, or Llama 3 handles your request better involves opening ten different tabs and paying five different subscriptions. It's inefficient and expensive.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <p class="text-indigo-300 font-medium">It's time to stop fighting your tools and get back to the vibe that makes you brilliant.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6 leading-tight">Your New Command Center for <span class="text-gradient-primary">AI-Native Development</span></h2>
+                    <p class="text-gray-400 text-lg mb-8">
+                        We treat prompt engineering and vibe coding as a serious engineering discipline. By unifying context management, model selection, and version control into one sleek interface, we let you focus on the logic while we handle the plumbing.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-robot text-indigo-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-lg">Agnostic Model Orchestration</h4>
+                                <p class="text-gray-400 mt-1">Switch between models instantly or run them in parallel to find the perfect output.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-syringe text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-lg">Smart Context Injection</h4>
+                                <p class="text-gray-400 mt-1">We automatically pull only the relevant files from your repo so you never hit a token limit unnecessarily.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Abstract visual representation of unification -->
+                <div class="relative bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-indigo-600/20 rounded-full blur-[50px] pointer-events-none"></div>
+                    <div class="space-y-4">
+                        <!-- Pseudo UI lines -->
+                        <div class="flex justify-between items-center text-xs text-gray-500 uppercase tracking-wider font-semibold mb-4">
+                            <span>Input Stream</span>
+                            <span>Model: Hybrid-Auto</span>
+                        </div>
+                        <div class="h-2 bg-gray-700 rounded w-3/4"></div>
+                        <div class="h-2 bg-gray-700 rounded w-1/2"></div>
+                        <div class="h-2 bg-gray-700 rounded w-5/6"></div>
+                        
+                        <div class="py-6 flex justify-center">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                                <i class="fa-solid fa-wand-magic-sparkles text-2xl text-white"></i>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-dark-900 rounded border border-white/5 font-mono text-sm text-green-400">
+                            > Generating module structure...<br>
+                            > Optimizing imports...<br>
+                            > Done.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-black/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Engineered for <span class="text-white">Flow State</span></h2>
+                <p class="text-gray-400 text-lg">Everything you need to turn thoughts into software.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="group bg-dark-800 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="h-48 overflow-hidden bg-dark-900 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent z-10"></div>
+                        <img src="/images/feature_1.png" alt="Infinite Context Memory" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-infinity text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1 text-white">Infinite Context Memory</h3>
+                        <p class="text-sm text-indigo-400 mb-4 font-mono">Forget about forgetting</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Our smart-indexing vector database remembers your entire codebase structure. We dynamically inject exactly what's needed.
+                        </p>
+                        <div class="pt-4 border-t border-white/5">
+                            <span class="text-xs text-gray-500"><i class="fa-solid fa-check mr-1 text-green-500"></i> Eliminates hallucinated imports</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="group bg-dark-800 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="h-48 overflow-hidden bg-dark-900 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent z-10"></div>
+                        <img src="/images/feature_2.png" alt="Prompt Version Control" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-code-branch text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1 text-white">Prompt Version Control (PVC)</h3>
+                        <p class="text-sm text-indigo-400 mb-4 font-mono">Git for your prompts</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Commit, branch, and rollback changes to your system prompts. Visually diff versions to see why output changed.
+                        </p>
+                        <div class="pt-4 border-t border-white/5">
+                            <span class="text-xs text-gray-500"><i class="fa-solid fa-check mr-1 text-green-500"></i> Complete reproducibility</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="group bg-dark-800 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="h-48 overflow-hidden bg-dark-900 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent z-10"></div>
+                        <img src="/images/feature_3.png" alt="Multi-Model Arena" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-table-columns text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1 text-white">The Multi-Model Arena</h3>
+                        <p class="text-sm text-indigo-400 mb-4 font-mono">Compare before you commit</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Run the same prompt against Claude, GPT-4, and Mistral simultaneously. Select the winner with one click.
+                        </p>
+                        <div class="pt-4 border-t border-white/5">
+                            <span class="text-xs text-gray-500"><i class="fa-solid fa-check mr-1 text-green-500"></i> Always use the best model</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="group bg-dark-800 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="h-48 overflow-hidden bg-dark-900 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent z-10"></div>
+                        <img src="/images/feature_4.png" alt="Vibe-to-Code" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1 text-white">Vibe-to-Code Scaffolding</h3>
+                        <p class="text-sm text-indigo-400 mb-4 font-mono">From thought to file</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Describe your app idea in plain English (the 'vibe'), and our engine generates the file structure and code, writing directly to your drive.
+                        </p>
+                        <div class="pt-4 border-t border-white/5">
+                            <span class="text-xs text-gray-500"><i class="fa-solid fa-check mr-1 text-green-500"></i> Zero to 'Hello World' in 60s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="group bg-dark-800 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="h-48 overflow-hidden bg-dark-900 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent z-10"></div>
+                        <img src="/images/feature_5.png" alt="Token Economy" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-chart-pie text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1 text-white">Token Economy Dashboard</h3>
+                        <p class="text-sm text-indigo-400 mb-4 font-mono">Watch your wallet</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Real-time cost estimation before you hit send. We analyze context to predict cost, preventing billing shock.
+                        </p>
+                        <div class="pt-4 border-t border-white/5">
+                            <span class="text-xs text-gray-500"><i class="fa-solid fa-check mr-1 text-green-500"></i> Save 30% on API costs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="group bg-dark-800 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="h-48 overflow-hidden bg-dark-900 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent z-10"></div>
+                        <img src="/images/feature_6.png" alt="Collaboration" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 bg-indigo-900/50 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-users text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1 text-white">Collaborative Playgrounds</h3>
+                        <p class="text-sm text-indigo-400 mb-4 font-mono">Vibe check with the team</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Share a live session link. Team members can tweak parameters and prompts in real-time.
+                        </p>
+                        <div class="pt-4 border-t border-white/5">
+                            <span class="text-xs text-gray-500"><i class="fa-solid fa-check mr-1 text-green-500"></i> Faster feedback loops</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section id="use-cases" class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center">Built for Every Kind of <span class="text-gradient-primary">Builder</span></h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Use Case 1 -->
+                <div class="bg-dark-800 p-8 rounded-xl border-l-4 border-indigo-500">
+                    <div class="mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">The Vibe Coder</span>
+                        <h3 class="text-xl font-bold text-white mt-1">Rapid Prototyping</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">"You have a killer idea for a SaaS app but hate writing CSS and setting up databases. You just want to see the product come to life."</p>
+                    <div class="bg-black/30 p-4 rounded mb-4">
+                        <p class="text-xs text-gray-300"><span class="text-indigo-400 font-bold">Solution:</span> Vibe-to-Code Scaffolding generates full stack, Multi-Model Arena handles refactoring.</p>
+                    </div>
+                    <p class="text-sm font-semibold text-white"><i class="fa-solid fa-rocket text-indigo-500 mr-2"></i>Launched MVP in a weekend.</p>
+                </div>
+
+                <!-- Use Case 2 -->
+                <div class="bg-dark-800 p-8 rounded-xl border-l-4 border-purple-500">
+                    <div class="mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-400">Prompt Engineers</span>
+                        <h3 class="text-xl font-bold text-white mt-1">System Prompt Optimization</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">"You are trying to stop an AI support bot from hallucinating policies, but every fix breaks something else."</p>
+                    <div class="bg-black/30 p-4 rounded mb-4">
+                        <p class="text-xs text-gray-300"><span class="text-purple-400 font-bold">Solution:</span> Use PVC to isolate changes and run regression tests against previous queries.</p>
+                    </div>
+                    <p class="text-sm font-semibold text-white"><i class="fa-solid fa-bullseye text-purple-500 mr-2"></i>99% accuracy achieved.</p>
+                </div>
+
+                <!-- Use Case 3 -->
+                <div class="bg-dark-800 p-8 rounded-xl border-l-4 border-emerald-500">
+                    <div class="mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Full-Stack Devs</span>
+                        <h3 class="text-xl font-bold text-white mt-1">Legacy Code Refactoring</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">"You've inherited a messy codebase with zero documentation and need to understand it without reading 10,000 lines."</p>
+                    <div class="bg-black/30 p-4 rounded mb-4">
+                        <p class="text-xs text-gray-300"><span class="text-emerald-400 font-bold">Solution:</span> Infinite Context Memory lets you chat with the repo to identify dependencies.</p>
+                    </div>
+                    <p class="text-sm font-semibold text-white"><i class="fa-solid fa-code text-emerald-500 mr-2"></i>Refactored 4x faster.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-24 bg-dark-800 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">From Vibe to Production in 4 Steps</h2>
+                <p class="text-gray-400">Stop overthinking the setup. Onboarding is effortless.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-indigo-900 to-transparent -z-10 transform -translate-y-full"></div>
+
+                <!-- Step 1 -->
+                <div class="relative bg-dark-900 p-6 rounded-xl border border-white/5 hover:border-indigo-500/50 transition-colors group">
+                    <div class="w-10 h-10 bg-dark-800 border border-indigo-500 text-indigo-400 font-bold rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">1</div>
+                    <h4 class="text-lg font-bold mb-2">Connect Your Keys</h4>
+                    <p class="text-sm text-gray-400">Securely add your OpenAI, Anthropic, or OpenRouter keys (stored locally).</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative bg-dark-900 p-6 rounded-xl border border-white/5 hover:border-indigo-500/50 transition-colors group">
+                    <div class="w-10 h-10 bg-dark-800 border border-indigo-500 text-indigo-400 font-bold rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">2</div>
+                    <h4 class="text-lg font-bold mb-2">Sync Your Repo</h4>
+                    <p class="text-sm text-gray-400">Point us to your local folder or GitHub repo to index your context.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative bg-dark-900 p-6 rounded-xl border border-white/5 hover:border-indigo-500/50 transition-colors group">
+                    <div class="w-10 h-10 bg-dark-800 border border-indigo-500 text-indigo-400 font-bold rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">3</div>
+                    <h4 class="text-lg font-bold mb-2">Describe the Vibe</h4>
+                    <p class="text-sm text-gray-400">Tell the chat interface what you want to build in plain English.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative bg-dark-900 p-6 rounded-xl border border-white/5 hover:border-indigo-500/50 transition-colors group">
+                    <div class="w-10 h-10 bg-dark-800 border border-indigo-500 text-indigo-400 font-bold rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">4</div>
+                    <h4 class="text-lg font-bold mb-2">Export & Deploy</h4>
+                    <p class="text-sm text-gray-400">One-click save the generated code to your files or deploy directly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-20 border-b border-white/5 pb-12">
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">2M+</div>
+                    <div class="text-indigo-400 font-medium mb-1">Prompts Optimized</div>
+                    <div class="text-xs text-gray-500">by developers just like you</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">40%</div>
+                    <div class="text-indigo-400 font-medium mb-1">Dev Time Saved</div>
+                    <div class="text-xs text-gray-500">on average per project</div>
+                </div>
+                <div class="text-center col-span-2 md:col-span-1">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2">150+</div>
+                    <div class="text-indigo-400 font-medium mb-1">Supported Models</div>
+                    <div class="text-xs text-gray-500">including local LLMs</div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-card-gradient p-8 rounded-2xl border border-white/10 relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-white/5 absolute top-6 left-6"></i>
+                    <p class="text-lg text-gray-300 mb-6 italic relative z-10">"I used to keep my prompts in a massive Notion doc. It was a nightmare. This tool totally changed how I code. I just describe the vibe, and the code appears. It feels like magic, but it's just really good engineering."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center font-bold text-lg">SJ</div>
+                        <div>
+                            <div class="text-white font-bold">Sarah J.</div>
+                            <div class="text-sm text-gray-500">Senior Frontend Dev</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-card-gradient p-8 rounded-2xl border border-white/10 relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-white/5 absolute top-6 left-6"></i>
+                    <p class="text-lg text-gray-300 mb-6 italic relative z-10">"The ability to run Claude and GPT-4 side-by-side saved me so much money. I realized I could use cheaper models for 80% of my tasks. This tool pays for itself."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center font-bold text-lg">MT</div>
+                        <div>
+                            <div class="text-white font-bold">Marcus T.</div>
+                            <div class="text-sm text-gray-500">AI Systems Architect</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-dark-800">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+            
+            <div class="space-y-4">
+                <!-- Q1 -->
+                <details class="group bg-dark-900 rounded-lg border border-white/5 open:border-indigo-500/30 transition-all">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-lg">
+                        Does this replace VS Code?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-400 leading-relaxed">
+                        Not necessarily! We work alongside it. You can use our standalone app for the 'heavy lifting' of generation, or use our extension to vibe code directly inside your editor.
+                    </div>
+                </details>
+
+                <!-- Q2 -->
+                <details class="group bg-dark-900 rounded-lg border border-white/5 open:border-indigo-500/30 transition-all">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-lg">
+                        Is my code safe? Do you train on it?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-400 leading-relaxed">
+                        Your code is yours. We operate with a 'Local-First' architecture. Your keys and code never touch our training servers. We are just the interface.
+                    </div>
+                </details>
+
+                <!-- Q3 -->
+                <details class="group bg-dark-900 rounded-lg border border-white/5 open:border-indigo-500/30 transition-all">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-lg">
+                        Can I use local models like Llama 3?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-400 leading-relaxed">
+                        Absolutely. We integrate seamlessly with Ollama and LM Studio so you can code completely offline with zero API costs.
+                    </div>
+                </details>
+
+                <!-- Q4 -->
+                <details class="group bg-dark-900 rounded-lg border border-white/5 open:border-indigo-500/30 transition-all">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-lg">
+                        I'm not a 'coder', is this for me?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-400 leading-relaxed">
+                        Yes! That's exactly who "Vibe Coders" are. If you understand logic and systems but don't have syntax memorized, this tool bridges that gap perfectly.
+                    </div>
+                </details>
+
+                <!-- Q5 -->
+                <details class="group bg-dark-900 rounded-lg border border-white/5 open:border-indigo-500/30 transition-all">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-lg">
+                        How does the pricing work?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-400 leading-relaxed">
+                        We offer a generous free tier for individuals. The Pro plan includes team collaboration features and advanced context retention history.
+                    </div>
+                </details>
+                
+                <!-- Q6 -->
+                <details class="group bg-dark-900 rounded-lg border border-white/5 open:border-indigo-500/30 transition-all">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-lg">
+                        Does it handle huge codebases?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-400 leading-relaxed">
+                        Yes. Our RAG (Retrieval-Augmented Generation) engine chunks your code intelligently, so we can handle repos with hundreds of files without confusing the LLM.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="cta" class="py-24 relative overflow-hidden bg-gradient-to-r from-indigo-900/20 to-purple-900/20">
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Ready to Code at the <br /><span class="text-gradient-primary">Speed of Thought?</span></h2>
+            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Stop letting syntax errors and context limits slow you down. Join thousands of vibe coders building the future today.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+                <button class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-10 rounded-lg shadow-xl shadow-indigo-600/30 transition-all transform hover:-translate-y-1">
+                    Get Early Access
+                </button>
+                <button class="bg-transparent border border-white/20 hover:bg-white/5 text-white font-semibold py-4 px-10 rounded-lg transition-all">
+                    Read the Docs
+                </button>
+            </div>
+            <p class="text-sm text-gray-500">Free forever for open source projects. No credit card required.</p>
+        </div>
+        
+        <!-- Decoration -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+             <div class="absolute top-1/2 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px] transform -translate-y-1/2"></div>
+             <div class="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px] transform -translate-y-1/2"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-white/5 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="#" class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-white text-[10px]"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white">VibeCode</span>
+                    </a>
+                    <p class="text-sm text-gray-500">The first IDE designed for the age of artificial intelligence. Code with vibes, not syntax.</p>
+                </div>
+                
+                <div>
+                    <h5 class="text-white font-semibold mb-4">Product</h5>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Integrations</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Changelog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-white font-semibold mb-4">Resources</h5>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Community Discord</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Prompt Library</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-white font-semibold mb-4">Legal</h5>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-600">&copy; 2023 VibeCode Inc. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fa-brands fa-discord"></i></a>
+                </div>
+                <a href="https://vibecode-pager.vercel.app" class="text-xs text-gray-600 hover:text-indigo-400 transition-colors bg-white/5 px-3 py-1 rounded-full">
+                    Made with VibeCode Pager
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+<!-- VibeCode Pager Watermark -->
+<a href="https://vibecode-pager.com" target="_blank" rel="noopener" class="vibecode-badge">
+  ⚡ Made with VibeCode Pager
+</a>
+<script>
+// VibeCode Pager - Landing Page JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+
+});
+</script>
+</body>
+</html>
